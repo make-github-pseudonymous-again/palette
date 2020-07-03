@@ -1,0 +1,21 @@
+{
+  "name": "@fabrique/palette",
+  "version": "1.0.0",
+  "description": "A color palette compositor.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": "git+https://github.com/aureooms/palette.git",
+  "keywords": [
+    "color",
+    "palette",
+    "compositor"
+  ],
+  "author": "Aurélien Ooms <aurelien.ooms@gmail.com>",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/aureooms/palette/issues"
+  },
+  "homepage": "https://github.com/aureooms/palette#readme"
+}
