@@ -2,9 +2,10 @@
   "name": "@fabrique/palette",
   "version": "1.0.0",
   "description": "A color palette compositor.",
-  "main": "lib/index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "build": "parcel build client/index.html",
+    "start": "parcel serve client/index.html"
   },
   "repository": "git+https://github.com/aureooms/palette.git",
   "keywords": [
@@ -17,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/aureooms/palette/issues"
   },
-  "homepage": "https://github.com/aureooms/palette#readme"
+  "homepage": "https://github.com/aureooms/palette#readme",
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.1"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }
