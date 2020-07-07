@@ -179,12 +179,12 @@ export default function App () {
 		//Promise.any(map(loadImageFromFile, files))
 		const file = files[0];
 		loadImageFromFile(file)
-			.catch(error => enqueueSnackbar(error.message, {variant: 'error'}))
 			.then(loadPaletteFromImage)
 			.then(newColors => {
 				enqueueSnackbar(`Successfully loaded ${file.name}!`, {variant: 'success'});
 				setColors(Seq.from(newColors));
-			});
+			})
+			.catch(error => enqueueSnackbar(error.message, {variant: 'error'}));
 	} ;
 
 	let initialFormat;
