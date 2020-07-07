@@ -74,6 +74,10 @@ export default function Color ({index, color, remove, update, move, transforms})
 
 	drag(drop(ref));
 
+	const buttonStyle = {
+		color: computedColor.isLight() ? '#333' : '#ccc',
+	} ;
+
 	return (
 		<li
 			ref={ref}
@@ -86,10 +90,10 @@ export default function Color ({index, color, remove, update, move, transforms})
 				value={computedColorString}
 				onChange={debounce(value => update(reverse(value)), 100)}
 			/>
-			<IconButton aria-label="change" className={classes.action} onClick={e => update(reverse(randomColor()))}>
+			<IconButton aria-label="change" className={classes.action} style={buttonStyle} onClick={e => update(reverse(randomColor()))}>
 				<CasinoIcon/>
 			</IconButton>
-			<IconButton aria-label="delete" className={classes.action} onClick={remove}>
+			<IconButton aria-label="delete" className={classes.action} style={buttonStyle} onClick={remove}>
 				<DeleteIcon/>
 			</IconButton>
 		</li>
