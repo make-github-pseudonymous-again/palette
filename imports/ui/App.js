@@ -22,6 +22,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import CasinoIcon from '@material-ui/icons/Casino';
 import AddIcon from '@material-ui/icons/Add';
 import SortIcon from '@material-ui/icons/Sort';
+import ImageIcon from '@material-ui/icons/Image';
 
 import Seq from '../lib/Seq.js' ;
 
@@ -34,8 +35,17 @@ import { FORMATS } from '../lib/formatPalette.js';
 
 import palette from 'google-palette';
 
+import loadPaletteFromImage from '../lib/color/loadPaletteFromImage.js';
+import loadImageFromFile from '../lib/loadImageFromFile.js';
+import InputFileButton from './input/InputFileButton.js';
+
 const useStyles = makeStyles(
 	theme => ({
+		loadImageButton: {
+			position: 'fixed',
+			bottom: theme.spacing(3),
+			right: theme.spacing(66),
+		},
 		sortButton: {
 			position: 'fixed',
 			bottom: theme.spacing(3),
@@ -162,6 +172,16 @@ export default function App () {
 		enqueueSnackbar('Copied URL to clipboard.');
 	} ;
 
+	const loadImage = event => {
+		event.persist();
+		const files = event.target.files;
+		console.debug(files);
+		//Promise.any(map(loadImageFromFile, files))
+		loadImageFromFile(files[0])
+			.then(loadPaletteFromImage)
+			.then(newColors => setColors(Seq.from(newColors)));
+	} ;
+
 	let initialFormat;
 
 	return (
@@ -202,6 +222,10 @@ export default function App () {
 			<Fab className={classes.shareButton} onClick={copyeURLToClipboard}>
 				<ShareIcon/>
 			</Fab>
+
+			<InputFileButton Button={Fab} className={classes.loadImageButton} color="secondary" onChange={loadImage}>
+				<ImageIcon/>
+			</InputFileButton>
 
 			<PaletteDownloadDialog initialFormat={initialFormat} open={downloading} colors={colors} onClose={e => setDownloading(false)}/>
 
