@@ -46,6 +46,7 @@ export default function ColorPicker ({
         style={{
           backgroundColor: value,
           color: color(value).isLight() ? '#111' : '#ddd',
+          transition: 'background-color 0s',
         }}
         label={value}
         onClick={() => setShowPicker(true)}
