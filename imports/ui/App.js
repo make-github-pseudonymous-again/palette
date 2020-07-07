@@ -8,7 +8,7 @@ import {
 
 import randomColor from 'randomcolor' ;
 
-import { list , map , enumerate , range } from '@aureooms/js-itertools' ;
+import { list , map , enumerate } from '@aureooms/js-itertools' ;
 import { randint } from '@aureooms/js-random' ;
 
 import { makeStyles } from '@material-ui/core/styles' ;
@@ -72,13 +72,13 @@ const useStyles = makeStyles(
 	})
 );
 
-export default function App ({initialColors}) {
+export default function App () {
 
 	const history = useHistory();
 	const location = useLocation();
 
 	const classes = useStyles();
-	const [colors, _setColors] = useState(initialColors);
+	const [colors, _setColors] = useState(Seq.empty());
 	const [downloading, setDownloading] = useState(false);
 
 	useEffect(() => {
@@ -88,6 +88,8 @@ export default function App ({initialColors}) {
 		} catch {
 			console.error('Could not parse location hash.');
 			console.debug(location);
+			const newColors = Seq.from(randomColor({count: 5}));
+			setColors(newColors);
 		}
 	}, [location]);
 
@@ -101,7 +103,7 @@ export default function App ({initialColors}) {
 		console.debug('randomize', colors.len());
 		const schemes = palette.listSchemes('all', colors.len());
 		if (schemes.length === 0) {
-			return setColors(Seq.from(map(() => randomColor(), range(colors.len()))));
+			return setColors(Seq.from(randomColor({count: colors.len()})));
 		}
 		const scheme = schemes[randint(0, schemes.length)];
 		const hexes = scheme(colors.len());
@@ -192,13 +194,4 @@ export default function App ({initialColors}) {
 
 		</div>
 		) ;
-} ;
-
-
-App.defaultProps = {
-	initialColors: Seq.from(map(() => randomColor(), range(5))),
-} ;
-
-App.propTypes = {
-	initialColors: PropTypes.object.isRequired,
 } ;
