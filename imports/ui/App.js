@@ -39,6 +39,9 @@ import loadPaletteFromImage from '../lib/color/loadPaletteFromImage.js';
 import loadImageFromFile from '../lib/loadImageFromFile.js';
 import InputFileButton from './input/InputFileButton.js';
 
+import encodeState from '../lib/state/encodeState.js' ;
+import decodeState from '../lib/state/decodeState.js' ;
+
 const useStyles = makeStyles(
 	theme => ({
 		loadFromURLButton: {
@@ -102,7 +105,7 @@ export default function App () {
 
 	useEffect(() => {
 		try {
-			const newColors = Seq.from(JSON.parse(decodeURIComponent(location.hash.slice(1))));
+			const newColors = Seq.from(decodeState(location.hash));
 			_setColors(newColors);
 		} catch {
 			console.error('Could not parse location hash.');
@@ -114,8 +117,8 @@ export default function App () {
 
 	const setColors = newColors => {
 		_setColors(newColors);
-		const hash = encodeURIComponent(JSON.stringify(list(newColors)));
-		history.push(`#${hash}`);
+		const hash = encodeState(list(newColors));
+		history.push(hash);
 	} ;
 
 	const assignRandomColors = () => {
