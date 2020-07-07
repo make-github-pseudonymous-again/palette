@@ -69,9 +69,7 @@ export default function Color ({index, color, remove, update, move, transforms, 
 	const computedColorString = computedColor.hex();
 
 	let displayedColor = computedColor ;
-	if (filters.grayscale) {
-		displayedColor = displayedColor.grayscale();
-	}
+	for (const fn of filters) displayedColor = fn(displayedColor);
 	const displayedColorString = displayedColor.hex();
 
 	const style = {
@@ -118,10 +116,10 @@ Color.propTypes = {
 	update: PropTypes.func.isRequired,
 	move: PropTypes.func.isRequired,
 	transforms: PropTypes.object.isRequired,
-	filters: PropTypes.object.isRequired,
+	filters: PropTypes.array.isRequired,
 } ;
 
 Color.defaultProps = {
 	transforms: {},
-	filters: {},
+	filters: [],
 } ;

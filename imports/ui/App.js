@@ -16,6 +16,8 @@ import { list } from '@aureooms/js-itertools' ;
 import { makeStyles } from '@material-ui/core/styles' ;
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar' ;
 
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -29,6 +31,9 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import InvertColorsOffIcon from '@material-ui/icons/InvertColorsOff';
 import FilterBAndWIcon from '@material-ui/icons/FilterBAndW';
+import FilterIcon from '@material-ui/icons/Filter';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 import Seq from '../lib/Seq.js' ;
 
@@ -47,8 +52,21 @@ import InputFileButton from './input/InputFileButton.js';
 import encodeState from '../lib/state/encodeState.js' ;
 import decodeState from '../lib/state/decodeState.js' ;
 
+import _color from 'color' ;
+import colorblind from 'color-blind' ;
+
 const useStyles = makeStyles(
 	theme => ({
+		filterChip: {
+			position: 'fixed',
+			top: theme.spacing(3),
+			right: theme.spacing(3),
+		},
+		colorBlindnessButton: {
+			position: 'fixed',
+			bottom: theme.spacing(3),
+			right: theme.spacing(102),
+		},
 		grayscaleButton: {
 			position: 'fixed',
 			bottom: theme.spacing(3),
@@ -111,6 +129,15 @@ const DEFAULT_STATE = {
 	colors: randomColor({count: 5}),
 } ;
 
+const FILTER_INDEX = {
+	'grayscale' : x => x.grayscale(),
+} ;
+
+const COLORBLIND_KEYS = Object.keys(colorblind);
+for (const key of COLORBLIND_KEYS) {
+	FILTER_INDEX[key] = x => _color(colorblind[key](x.hex()));
+}
+
 export default function App () {
 
 	const history = useHistory();
@@ -122,7 +149,12 @@ export default function App () {
 	const [downloading, setDownloading] = useState(false);
 	const [loadingFromURL, setLoadingFromURL] = useState(false);
 	const [invertColors, setInvertColors] = useState(false);
-	const [grayscale, setGrayscale] = useState(false);
+	const [filterKey, setFilterKey] = useState();
+	const grayscale = filterKey === 'grayscale';
+	const colorBlindnessIndex = COLORBLIND_KEYS.indexOf(filterKey);
+	const colorBlindness = colorBlindnessIndex !== -1;
+	const nextColorblindnessIndex = colorBlindnessIndex + 1;
+	const nextColorblindnessKey = nextColorblindnessIndex < COLORBLIND_KEYS.length ? COLORBLIND_KEYS[nextColorblindnessIndex] : '';
 
 	useEffect(() => {
 		try {
@@ -227,9 +259,8 @@ export default function App () {
 		invert: invertColors,
 	} ;
 
-	const filters = {
-		grayscale: grayscale,
-	} ;
+	const filters = [ ] ;
+	if (filterKey) filters.push(FILTER_INDEX[filterKey]);
 
 	return (
 		<div>
@@ -244,8 +275,30 @@ export default function App () {
 				filters={filters}
 			/>
 
+			{filterKey &&
+				<Chip
+					className={classes.filterChip}
+					label={filterKey}
+        			avatar={<Avatar><FilterIcon/></Avatar>}
+					onDelete={e => setFilterKey(undefined)}
+				/>
+			}
+
+			<Tooltip title="Color blindness filters" placement="top">
+			<Fab
+				className={classes.colorBlindnessButton}
+				onClick={e => setFilterKey(nextColorblindnessKey)}
+			>
+				{ colorBlindness ? <VisibilityOffIcon/> : <VisibilityIcon/> }
+			</Fab>
+			</Tooltip>
+
 			<Tooltip title="Grayscale filter" placement="top">
-			<Fab className={classes.grayscaleButton} style={{backgroundColor: !grayscale ? '#fff' : '#000'}} onClick={e => setGrayscale(!grayscale)}>
+			<Fab
+				className={classes.grayscaleButton}
+				style={{backgroundColor: !grayscale ? '#fff' : '#000'}}
+				onClick={e => setFilterKey(!grayscale ? 'grayscale' : '')}
+			>
 				<FilterBAndWIcon style={{color: grayscale ? '#fff' : '#000'}}/>
 			</Fab>
 			</Tooltip>

@@ -40,5 +40,5 @@ export default function Palette ({colors, transforms, filters, addColor, removeC
 Palette.propTypes = {
 	colors: PropTypes.object.isRequired,
 	transforms: PropTypes.object,
-	filters: PropTypes.object,
+	filters: PropTypes.array,
 } ;
