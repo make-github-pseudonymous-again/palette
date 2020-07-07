@@ -177,9 +177,14 @@ export default function App () {
 		const files = event.target.files;
 		console.debug(files);
 		//Promise.any(map(loadImageFromFile, files))
-		loadImageFromFile(files[0])
+		const file = files[0];
+		loadImageFromFile(file)
+			.catch(error => enqueueSnackbar(error.message, {variant: 'error'}))
 			.then(loadPaletteFromImage)
-			.then(newColors => setColors(Seq.from(newColors)));
+			.then(newColors => {
+				enqueueSnackbar(`Successfully loaded ${file.name}!`, {variant: 'success'});
+				setColors(Seq.from(newColors));
+			});
 	} ;
 
 	let initialFormat;
