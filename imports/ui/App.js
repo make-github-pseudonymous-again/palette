@@ -23,10 +23,12 @@ import CasinoIcon from '@material-ui/icons/Casino';
 import AddIcon from '@material-ui/icons/Add';
 import SortIcon from '@material-ui/icons/Sort';
 import ImageIcon from '@material-ui/icons/Image';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 import Seq from '../lib/Seq.js' ;
 
 import PaletteDownloadDialog from './PaletteDownloadDialog.js' ;
+import LoadFromURLDialog from './LoadFromURLDialog.js' ;
 import Palette from './Palette.js' ;
 
 import saveTextToClipboard from '../lib/saveTextToClipboard.js' ;
@@ -41,6 +43,11 @@ import InputFileButton from './input/InputFileButton.js';
 
 const useStyles = makeStyles(
 	theme => ({
+		loadFromURLButton: {
+			position: 'fixed',
+			bottom: theme.spacing(3),
+			right: theme.spacing(75),
+		},
 		loadImageButton: {
 			position: 'fixed',
 			bottom: theme.spacing(3),
@@ -93,6 +100,7 @@ export default function App () {
 	const classes = useStyles();
 	const [colors, _setColors] = useState(Seq.empty());
 	const [downloading, setDownloading] = useState(false);
+	const [loadingFromURL, setLoadingFromURL] = useState(false);
 
 	useEffect(() => {
 		try {
@@ -200,6 +208,10 @@ export default function App () {
 			moveColor={moveColor}
 		/>
 
+			<Fab className={classes.loadFromURLButton} color="secondary" onClick={e => setLoadingFromURL(true)}>
+				<AttachFileIcon/>
+			</Fab>
+
 			<Fab className={classes.sortButton} onClick={sortColors}>
 				<SortIcon/>
 			</Fab>
@@ -233,6 +245,7 @@ export default function App () {
 			</InputFileButton>
 
 			<PaletteDownloadDialog initialFormat={initialFormat} open={downloading} colors={colors} onClose={e => setDownloading(false)}/>
+			<LoadFromURLDialog open={loadingFromURL} setColors={setColors} onClose={e => setLoadingFromURL(false)}/>
 
 		</div>
 		) ;
