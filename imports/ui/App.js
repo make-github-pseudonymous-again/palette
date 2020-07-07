@@ -167,7 +167,7 @@ export default function App () {
 		enqueueSnackbar('Copied palette to clipboard.');
 	} ;
 
-	const copyeURLToClipboard = () => {
+	const copyURLToClipboard = () => {
 		saveTextToClipboard(window.location.href);
 		enqueueSnackbar('Copied URL to clipboard.');
 	} ;
@@ -219,7 +219,7 @@ export default function App () {
 				<CloudUploadIcon/>
 			</Fab>
 
-			<Fab className={classes.shareButton} onClick={copyeURLToClipboard}>
+			<Fab className={classes.shareButton} onClick={copyURLToClipboard}>
 				<ShareIcon/>
 			</Fab>
 
