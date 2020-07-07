@@ -178,10 +178,14 @@ export default function App () {
 		console.debug(files);
 		//Promise.any(map(loadImageFromFile, files))
 		const file = files[0];
+		enqueueSnackbar(`Loading contents of ${file.name}.`, {variant: 'info'});
 		loadImageFromFile(file)
-			.then(loadPaletteFromImage)
+			.then(url => {
+				enqueueSnackbar(`Loading palette from the contents of ${file.name}.`, {variant: 'info'});
+				return loadPaletteFromImage(url);
+			})
 			.then(newColors => {
-				enqueueSnackbar(`Successfully loaded ${file.name}!`, {variant: 'success'});
+				enqueueSnackbar(`Successfully loaded palette from ${file.name}.`, {variant: 'success'});
 				setColors(Seq.from(newColors));
 			})
 			.catch(error => enqueueSnackbar(error.message, {variant: 'error'}));

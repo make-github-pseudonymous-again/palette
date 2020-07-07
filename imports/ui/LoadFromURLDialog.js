@@ -41,6 +41,7 @@ export default function LoadFromURLDialog ( { open, onClose, setColors } ) {
   const [URL, setURL] = useState('');
 
   const loadURL = () => {
+    enqueueSnackbar(`Loading palette from ${URL}.`, {variant: 'info'});
     loadPaletteFromImage(URL)
     .then(newColors => {
       enqueueSnackbar(`Successfully loaded ${URL}.`, {variant: 'success'});
