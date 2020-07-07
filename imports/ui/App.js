@@ -92,6 +92,10 @@ const useStyles = makeStyles(
 	})
 );
 
+const DEFAULT_STATE = {
+	colors: randomColor({count: 5}),
+} ;
+
 export default function App () {
 
 	const history = useHistory();
@@ -105,19 +109,25 @@ export default function App () {
 
 	useEffect(() => {
 		try {
-			const newColors = Seq.from(decodeState(location.hash));
-			_setColors(newColors);
+			const {
+				colors: newColors ,
+			} = decodeState(location.hash);
+			_setColors(Seq.from(newColors));
 		} catch {
 			console.error('Could not parse location hash.');
 			console.debug(location);
-			const newColors = Seq.from(randomColor({count: 5}));
-			setColors(newColors);
+			const {
+				colors: newColors ,
+			} = DEFAULT_STATE;
+			setColors(Seq.from(newColors));
 		}
 	}, [location]);
 
 	const setColors = newColors => {
 		_setColors(newColors);
-		const hash = encodeState(list(newColors));
+		const hash = encodeState({
+			colors: list(newColors),
+		});
 		history.push(hash);
 	} ;
 
