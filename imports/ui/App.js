@@ -24,6 +24,8 @@ import AddIcon from '@material-ui/icons/Add';
 import SortIcon from '@material-ui/icons/Sort';
 import ImageIcon from '@material-ui/icons/Image';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import InvertColorsIcon from '@material-ui/icons/InvertColors';
+import InvertColorsOffIcon from '@material-ui/icons/InvertColorsOff';
 
 import Seq from '../lib/Seq.js' ;
 
@@ -44,6 +46,11 @@ import decodeState from '../lib/state/decodeState.js' ;
 
 const useStyles = makeStyles(
 	theme => ({
+		invertColorsButton: {
+			position: 'fixed',
+			bottom: theme.spacing(3),
+			right: theme.spacing(84),
+		},
 		loadFromURLButton: {
 			position: 'fixed',
 			bottom: theme.spacing(3),
@@ -106,6 +113,7 @@ export default function App () {
 	const [colors, _setColors] = useState(Seq.empty());
 	const [downloading, setDownloading] = useState(false);
 	const [loadingFromURL, setLoadingFromURL] = useState(false);
+	const [invertColors, setInvertColors] = useState(false);
 
 	useEffect(() => {
 		try {
@@ -206,6 +214,10 @@ export default function App () {
 
 	let initialFormat;
 
+	const transforms = {
+		invert: invertColors,
+	} ;
+
 	return (
 		<div>
 
@@ -215,7 +227,12 @@ export default function App () {
 				removeColor={removeColor}
 				updateColor={updateColor}
 				moveColor={moveColor}
+				transforms={transforms}
 			/>
+
+			<Fab className={classes.invertColorsButton} onClick={e => setInvertColors(!invertColors)}>
+				{ invertColors ? <InvertColorsOffIcon/> : <InvertColorsIcon/> }
+			</Fab>
 
 			<Fab className={classes.loadFromURLButton} color="secondary" onClick={e => setLoadingFromURL(true)}>
 				<AttachFileIcon/>

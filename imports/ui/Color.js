@@ -3,6 +3,7 @@ import PropTypes from 'prop-types' ;
 
 import randomColor from 'randomcolor' ;
 import debounce from 'debounce' ;
+import { compose } from '@aureooms/js-functools' ;
 
 import { useDrag , useDrop } from 'react-dnd' ;
 
@@ -15,6 +16,8 @@ import CasinoIcon from '@material-ui/icons/Casino';
 
 //import ColorPicker from 'material-ui-color-picker' ;
 import ColorPicker from './input/ColorPicker' ;
+
+import _color from 'color' ;
 
 const useStyles = makeStyles(
 	theme => ({
@@ -32,7 +35,7 @@ const ItemTypes = {
 	COLOR: 'knight'
 } ;
 
-export default function Color ({index, color, remove, update, move}) {
+export default function Color ({index, color, remove, update, move, transforms}) {
 
 	const ref = useRef(null);
 
@@ -55,8 +58,17 @@ export default function Color ({index, color, remove, update, move}) {
 		})
 	});
 
+	let computedColor = _color(color);
+	let reverse = x => _color(x);
+	if (transforms.invert) {
+		computedColor = computedColor.negate();
+		reverse = compose([x => x.negate(), reverse]);
+	}
+	reverse = compose([x => x.hex(), reverse]);
+	const computedColorString = computedColor.hex();
+
 	const style = {
-		background: color ,
+		background: computedColorString ,
 		opacity: isDragging ? 0.8 : isOver ? 0.5 : 1,
 	} ;
 
@@ -71,11 +83,10 @@ export default function Color ({index, color, remove, update, move}) {
 			<Chip label={index}/>
 			<ColorPicker
 				name='color'
-				style={{color: 'white'}}
-				value={color}
-				onChange={debounce(update, 100)}
+				value={computedColorString}
+				onChange={debounce(value => update(reverse(value)), 100)}
 			/>
-			<IconButton aria-label="change" className={classes.action} onClick={e => update(randomColor())}>
+			<IconButton aria-label="change" className={classes.action} onClick={e => update(reverse(randomColor()))}>
 				<CasinoIcon/>
 			</IconButton>
 			<IconButton aria-label="delete" className={classes.action} onClick={remove}>
@@ -91,4 +102,9 @@ Color.propTypes = {
 	remove: PropTypes.func.isRequired,
 	update: PropTypes.func.isRequired,
 	move: PropTypes.func.isRequired,
+	transforms: PropTypes.object.isRequired,
+} ;
+
+Color.defaultProps = {
+	transforms: {},
 } ;
