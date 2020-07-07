@@ -62,8 +62,6 @@ export default function Color ({index, color, remove, update, move}) {
 
 	drag(drop(ref));
 
-	console.debug('style',style);
-
 	return (
 		<li
 			ref={ref}

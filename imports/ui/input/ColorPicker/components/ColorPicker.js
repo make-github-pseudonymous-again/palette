@@ -37,8 +37,6 @@ export default function ColorPicker ({
     [value]
   ) ;
 
-  console.debug('ColorPicker', value, current);
-
   return (
     <span>
       <Chip
