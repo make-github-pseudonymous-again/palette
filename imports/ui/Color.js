@@ -36,7 +36,7 @@ const ItemTypes = {
 	COLOR: 'knight'
 } ;
 
-export default function Color ({index, color, remove, update, move, transforms}) {
+export default function Color ({index, color, remove, update, move, transforms, filters}) {
 
 	const ref = useRef(null);
 
@@ -69,7 +69,7 @@ export default function Color ({index, color, remove, update, move, transforms})
 	const computedColorString = computedColor.hex();
 
 	let displayedColor = computedColor ;
-	if (transforms.grayscale) {
+	if (filters.grayscale) {
 		displayedColor = displayedColor.grayscale();
 	}
 	const displayedColorString = displayedColor.hex();
@@ -118,8 +118,10 @@ Color.propTypes = {
 	update: PropTypes.func.isRequired,
 	move: PropTypes.func.isRequired,
 	transforms: PropTypes.object.isRequired,
+	filters: PropTypes.object.isRequired,
 } ;
 
 Color.defaultProps = {
 	transforms: {},
+	filters: {},
 } ;

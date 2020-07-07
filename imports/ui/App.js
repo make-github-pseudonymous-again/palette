@@ -225,6 +225,9 @@ export default function App () {
 
 	const transforms = {
 		invert: invertColors,
+	} ;
+
+	const filters = {
 		grayscale: grayscale,
 	} ;
 
@@ -238,6 +241,7 @@ export default function App () {
 				updateColor={updateColor}
 				moveColor={moveColor}
 				transforms={transforms}
+				filters={filters}
 			/>
 
 			<Tooltip title="Grayscale filter" placement="top">

@@ -12,7 +12,7 @@ const useStyles = makeStyles(
 	})
 );
 
-export default function Palette ({colors, transforms, addColor, removeColor, updateColor, moveColor}) {
+export default function Palette ({colors, transforms, filters, addColor, removeColor, updateColor, moveColor}) {
 
 	const classes = useStyles();
 
@@ -28,6 +28,7 @@ export default function Palette ({colors, transforms, addColor, removeColor, upd
 						update={updateColor(i)}
 						move={moveColor(i)}
 						transforms={transforms}
+						filters={filters}
 					/>
 				),
 				enumerate(colors)
@@ -39,4 +40,5 @@ export default function Palette ({colors, transforms, addColor, removeColor, upd
 Palette.propTypes = {
 	colors: PropTypes.object.isRequired,
 	transforms: PropTypes.object,
+	filters: PropTypes.object,
 } ;
