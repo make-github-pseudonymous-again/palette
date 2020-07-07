@@ -15,6 +15,8 @@ import { list } from '@aureooms/js-itertools' ;
 
 import { makeStyles } from '@material-ui/core/styles' ;
 import Fab from '@material-ui/core/Fab';
+import Tooltip from '@material-ui/core/Tooltip';
+
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import ShareIcon from '@material-ui/icons/Share';
@@ -238,49 +240,71 @@ export default function App () {
 				transforms={transforms}
 			/>
 
+			<Tooltip title="Grayscale filter" placement="top">
 			<Fab className={classes.grayscaleButton} style={{backgroundColor: !grayscale ? '#fff' : '#000'}} onClick={e => setGrayscale(!grayscale)}>
 				<FilterBAndWIcon style={{color: grayscale ? '#fff' : '#000'}}/>
 			</Fab>
+			</Tooltip>
 
+			<Tooltip title="Invert colors" placement="top">
 			<Fab className={classes.invertColorsButton} onClick={e => setInvertColors(!invertColors)}>
 				{ invertColors ? <InvertColorsOffIcon/> : <InvertColorsIcon/> }
 			</Fab>
+			</Tooltip>
 
+			<Tooltip title="Load palette from image URL" placement="top">
 			<Fab className={classes.loadFromURLButton} color="secondary" onClick={e => setLoadingFromURL(true)}>
 				<AttachFileIcon/>
 			</Fab>
+			</Tooltip>
 
+			<Tooltip title="Load palette from image file" placement="top">
 			<InputFileButton Button={Fab} className={classes.loadImageButton} color="secondary" onChange={loadImage}>
 				<ImageIcon/>
 			</InputFileButton>
+			</Tooltip>
 
+			<Tooltip title="Sort palette" placement="top">
 			<Fab className={classes.sortButton} onClick={sortColors}>
 				<SortIcon/>
 			</Fab>
+			</Tooltip>
 
+			<Tooltip title="Add color" placement="top">
 			<Fab className={classes.addButton} color="secondary" onClick={e => addColor(randomColor())}>
 				<AddIcon/>
 			</Fab>
+			</Tooltip>
 
+			<Tooltip title="Assign random colors" placement="top">
 			<Fab className={classes.randomButton} color="secondary" onClick={assignRandomColors}>
 				<CasinoIcon/>
 			</Fab>
+			</Tooltip>
 
+			<Tooltip title="Copy palette to clipboard" placement="top">
 			<Fab className={classes.copyButton} color="primary" onClick={copyPaletteToClipboard}>
 				<AssignmentIcon/>
 			</Fab>
+			</Tooltip>
 
+			<Tooltip title="Save palette to file" placement="top">
 			<Fab className={classes.saveButton} color="primary" onClick={e => setDownloading(true)}>
 				<SaveIcon/>
 			</Fab>
+			</Tooltip>
 
+			<Tooltip title="Load palette from file" placement="top">
 			<Fab className={classes.loadButton} disabled>
 				<CloudUploadIcon/>
 			</Fab>
+			</Tooltip>
 
+			<Tooltip title="Share palette" placement="top">
 			<Fab className={classes.shareButton} onClick={copyURLToClipboard}>
 				<ShareIcon/>
 			</Fab>
+			</Tooltip>
 
 			<PaletteDownloadDialog initialFormat={initialFormat} open={downloading} colors={colors} onClose={e => setDownloading(false)}/>
 			<LoadFromURLDialog open={loadingFromURL} setColors={setColors} onClose={e => setLoadingFromURL(false)}/>
