@@ -7,11 +7,14 @@ import { DndProvider } from 'react-dnd' ;
 import { HTML5Backend } from 'react-dnd-html5-backend' ;
 
 import App from '../imports/ui/App.js';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const root = document.getElementById('app');
 
 render(
 	<DndProvider backend={HTML5Backend}>
-		<App/>
+		<Router>
+			<App/>
+		</Router>
 	</DndProvider>,
 root);

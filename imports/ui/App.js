@@ -1,5 +1,10 @@
-import React, { useState } from 'react' ;
+import React, { useState , useEffect } from 'react' ;
 import PropTypes from 'prop-types' ;
+
+import {
+	useHistory,
+	useLocation,
+} from 'react-router-dom';
 
 import randomColor from 'randomcolor' ;
 
@@ -69,9 +74,28 @@ const useStyles = makeStyles(
 
 export default function App ({initialColors}) {
 
+	const history = useHistory();
+	const location = useLocation();
+
 	const classes = useStyles();
-	const [colors, setColors] = useState(initialColors);
+	const [colors, _setColors] = useState(initialColors);
 	const [downloading, setDownloading] = useState(false);
+
+	useEffect(() => {
+		try {
+			const newColors = Seq.from(JSON.parse(decodeURIComponent(location.hash.slice(1))));
+			_setColors(newColors);
+		} catch {
+			console.error('Could not parse location hash.');
+			console.debug(location);
+		}
+	}, [location]);
+
+	const setColors = newColors => {
+		_setColors(newColors);
+		const hash = encodeURIComponent(JSON.stringify(list(newColors)));
+		history.push(`#${hash}`);
+	} ;
 
 	const randomColors = () => {
 		console.debug('randomize', colors.len());
