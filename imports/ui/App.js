@@ -9,9 +9,9 @@ import {
 import { useSnackbar } from 'notistack';
 
 import randomColor from 'randomcolor' ;
+import randomColors from '../lib/color/randomColors.js' ;
 
-import { list , map , enumerate } from '@aureooms/js-itertools' ;
-import { randint } from '@aureooms/js-random' ;
+import { list } from '@aureooms/js-itertools' ;
 
 import { makeStyles } from '@material-ui/core/styles' ;
 import Fab from '@material-ui/core/Fab';
@@ -34,8 +34,6 @@ import Palette from './Palette.js' ;
 import saveTextToClipboard from '../lib/saveTextToClipboard.js' ;
 import stringifyPalette from '../lib/stringifyPalette.js';
 import { FORMATS } from '../lib/formatPalette.js';
-
-import palette from 'google-palette';
 
 import loadPaletteFromImage from '../lib/color/loadPaletteFromImage.js';
 import loadImageFromFile from '../lib/loadImageFromFile.js';
@@ -120,15 +118,9 @@ export default function App () {
 		history.push(`#${hash}`);
 	} ;
 
-	const randomColors = () => {
+	const assignRandomColors = () => {
 		console.debug('randomize', colors.len());
-		const schemes = palette.listSchemes('all', colors.len());
-		if (schemes.length === 0) {
-			return setColors(Seq.from(randomColor({count: colors.len()})));
-		}
-		const scheme = schemes[randint(0, schemes.length)];
-		const hexes = scheme(colors.len());
-		setColors(Seq.from(map(hex => `#${hex}`, hexes)));
+		setColors(Seq.from(randomColors(colors.len())));
 	} ;
 
 	const sortColors = () => {
@@ -224,7 +216,7 @@ export default function App () {
 				<AddIcon/>
 			</Fab>
 
-			<Fab className={classes.randomButton} color="secondary" onClick={randomColors}>
+			<Fab className={classes.randomButton} color="secondary" onClick={assignRandomColors}>
 				<CasinoIcon/>
 			</Fab>
 
