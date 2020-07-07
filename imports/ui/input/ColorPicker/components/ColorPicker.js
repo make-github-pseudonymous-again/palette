@@ -42,6 +42,7 @@ export default function ColorPicker ({
       <Chip
         avatar={<Avatar><ColorLensIcon/></Avatar>}
         style={{
+          fontFamily: 'monospace',
           backgroundColor: value,
           color: color(value).isLight() ? '#111' : '#ddd',
           transition: 'background-color 0s',
