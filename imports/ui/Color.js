@@ -56,8 +56,8 @@ export default function Color ({index, color, remove, update, move}) {
 	});
 
 	const style = {
-		background: isOver ? 'grey' : color ,
-		opacity: isDragging || isOver ? 0.5 : 1,
+		background: color ,
+		opacity: isDragging ? 0.8 : isOver ? 0.5 : 1,
 	} ;
 
 	drag(drop(ref));
