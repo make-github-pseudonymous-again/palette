@@ -67,16 +67,22 @@ export default function Color ({index, color, remove, update, move, transforms})
 	reverse = compose([x => x.hex(), reverse]);
 	const computedColorString = computedColor.hex();
 
+	let displayedColor = computedColor ;
+	if (transforms.grayscale) {
+		displayedColor = displayedColor.grayscale();
+	}
+	const displayedColorString = displayedColor.hex();
+
 	const style = {
-		background: computedColorString ,
+		background: displayedColorString ,
 		opacity: isDragging ? 0.8 : isOver ? 0.5 : 1,
 	} ;
 
-	drag(drop(ref));
-
 	const buttonStyle = {
-		color: computedColor.isLight() ? '#333' : '#ccc',
+		color: displayedColor.isLight() ? '#333' : '#ccc',
 	} ;
+
+	drag(drop(ref));
 
 	return (
 		<li

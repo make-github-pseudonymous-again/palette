@@ -26,6 +26,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import InvertColorsOffIcon from '@material-ui/icons/InvertColorsOff';
+import FilterBAndWIcon from '@material-ui/icons/FilterBAndW';
 
 import Seq from '../lib/Seq.js' ;
 
@@ -46,6 +47,11 @@ import decodeState from '../lib/state/decodeState.js' ;
 
 const useStyles = makeStyles(
 	theme => ({
+		grayscaleButton: {
+			position: 'fixed',
+			bottom: theme.spacing(3),
+			right: theme.spacing(93),
+		},
 		invertColorsButton: {
 			position: 'fixed',
 			bottom: theme.spacing(3),
@@ -114,6 +120,7 @@ export default function App () {
 	const [downloading, setDownloading] = useState(false);
 	const [loadingFromURL, setLoadingFromURL] = useState(false);
 	const [invertColors, setInvertColors] = useState(false);
+	const [grayscale, setGrayscale] = useState(false);
 
 	useEffect(() => {
 		try {
@@ -216,6 +223,7 @@ export default function App () {
 
 	const transforms = {
 		invert: invertColors,
+		grayscale: grayscale,
 	} ;
 
 	return (
@@ -229,6 +237,10 @@ export default function App () {
 				moveColor={moveColor}
 				transforms={transforms}
 			/>
+
+			<Fab className={classes.grayscaleButton} style={{backgroundColor: !grayscale ? '#fff' : '#000'}} onClick={e => setGrayscale(!grayscale)}>
+				<FilterBAndWIcon style={{color: grayscale ? '#fff' : '#000'}}/>
+			</Fab>
 
 			<Fab className={classes.invertColorsButton} onClick={e => setInvertColors(!invertColors)}>
 				{ invertColors ? <InvertColorsOffIcon/> : <InvertColorsIcon/> }
