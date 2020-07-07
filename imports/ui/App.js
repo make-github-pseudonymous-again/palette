@@ -6,6 +6,8 @@ import {
 	useLocation,
 } from 'react-router-dom';
 
+import { useSnackbar } from 'notistack';
+
 import randomColor from 'randomcolor' ;
 
 import { list , map , enumerate } from '@aureooms/js-itertools' ;
@@ -76,6 +78,7 @@ export default function App () {
 
 	const history = useHistory();
 	const location = useLocation();
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const classes = useStyles();
 	const [colors, _setColors] = useState(Seq.empty());
@@ -149,6 +152,16 @@ export default function App () {
 		);
 	} ;
 
+	const copyPaletteToClipboard = () => {
+		saveTextToClipboard(stringifyPalette(FORMATS[0], colors));
+		enqueueSnackbar('Copied palette to clipboard.');
+	} ;
+
+	const copyeURLToClipboard = () => {
+		saveTextToClipboard(window.location.href);
+		enqueueSnackbar('Copied URL to clipboard.');
+	} ;
+
 	let initialFormat;
 
 	return (
@@ -174,7 +187,7 @@ export default function App () {
 				<CasinoIcon/>
 			</Fab>
 
-			<Fab className={classes.copyButton} color="primary" onClick={e => saveTextToClipboard(stringifyPalette(FORMATS[0], colors))}>
+			<Fab className={classes.copyButton} color="primary" onClick={copyPaletteToClipboard}>
 				<AssignmentIcon/>
 			</Fab>
 
@@ -186,7 +199,7 @@ export default function App () {
 				<CloudUploadIcon/>
 			</Fab>
 
-			<Fab className={classes.shareButton} onClick={e => saveTextToClipboard(window.location.href)}>
+			<Fab className={classes.shareButton} onClick={copyeURLToClipboard}>
 				<ShareIcon/>
 			</Fab>
 

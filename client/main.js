@@ -8,13 +8,16 @@ import { HTML5Backend } from 'react-dnd-html5-backend' ;
 
 import App from '../imports/ui/App.js';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 
 const root = document.getElementById('app');
 
 render(
 	<DndProvider backend={HTML5Backend}>
-		<Router>
-			<App/>
-		</Router>
+		<SnackbarProvider maxSnack={3}>
+			<Router>
+				<App/>
+			</Router>
+		</SnackbarProvider>
 	</DndProvider>,
 root);
