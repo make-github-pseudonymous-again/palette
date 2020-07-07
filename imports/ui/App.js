@@ -197,12 +197,12 @@ export default function App () {
 		<div>
 
 			<Palette
-			colors={colors}
-			addColor={addColor}
-			removeColor={removeColor}
-			updateColor={updateColor}
-			moveColor={moveColor}
-		/>
+				colors={colors}
+				addColor={addColor}
+				removeColor={removeColor}
+				updateColor={updateColor}
+				moveColor={moveColor}
+			/>
 
 			<Fab className={classes.loadFromURLButton} color="secondary" onClick={e => setLoadingFromURL(true)}>
 				<AttachFileIcon/>
@@ -244,5 +244,5 @@ export default function App () {
 			<LoadFromURLDialog open={loadingFromURL} setColors={setColors} onClose={e => setLoadingFromURL(false)}/>
 
 		</div>
-		) ;
+	) ;
 } ;
