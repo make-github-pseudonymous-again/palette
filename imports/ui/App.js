@@ -186,7 +186,7 @@ export default function App () {
 				<CloudUploadIcon/>
 			</Fab>
 
-			<Fab className={classes.shareButton} disabled>
+			<Fab className={classes.shareButton} onClick={e => saveTextToClipboard(window.location.href)}>
 				<ShareIcon/>
 			</Fab>
 
