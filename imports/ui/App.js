@@ -212,6 +212,10 @@ export default function App () {
 				<AttachFileIcon/>
 			</Fab>
 
+			<InputFileButton Button={Fab} className={classes.loadImageButton} color="secondary" onChange={loadImage}>
+				<ImageIcon/>
+			</InputFileButton>
+
 			<Fab className={classes.sortButton} onClick={sortColors}>
 				<SortIcon/>
 			</Fab>
@@ -239,10 +243,6 @@ export default function App () {
 			<Fab className={classes.shareButton} onClick={copyURLToClipboard}>
 				<ShareIcon/>
 			</Fab>
-
-			<InputFileButton Button={Fab} className={classes.loadImageButton} color="secondary" onChange={loadImage}>
-				<ImageIcon/>
-			</InputFileButton>
 
 			<PaletteDownloadDialog initialFormat={initialFormat} open={downloading} colors={colors} onClose={e => setDownloading(false)}/>
 			<LoadFromURLDialog open={loadingFromURL} setColors={setColors} onClose={e => setLoadingFromURL(false)}/>
