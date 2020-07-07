@@ -153,45 +153,45 @@ export default function App ({initialColors}) {
 		<div>
 
 			<Palette
-				colors={colors}
-				addColor={addColor}
-				removeColor={removeColor}
-				updateColor={updateColor}
-				moveColor={moveColor}
-			/>
+			colors={colors}
+			addColor={addColor}
+			removeColor={removeColor}
+			updateColor={updateColor}
+			moveColor={moveColor}
+		/>
 
 			<Fab className={classes.sortButton} onClick={sortColors}>
-				  <SortIcon/>
+				<SortIcon/>
 			</Fab>
 
 			<Fab className={classes.addButton} color="secondary" onClick={e => addColor(randomColor())}>
-				  <AddIcon/>
+				<AddIcon/>
 			</Fab>
 
 			<Fab className={classes.randomButton} color="secondary" onClick={randomColors}>
-				  <CasinoIcon/>
+				<CasinoIcon/>
 			</Fab>
 
 			<Fab className={classes.copyButton} color="primary" onClick={e => saveTextToClipboard(stringifyPalette(FORMATS[0], colors))}>
-				  <AssignmentIcon/>
+				<AssignmentIcon/>
 			</Fab>
 
 			<Fab className={classes.saveButton} color="primary" onClick={e => setDownloading(true)}>
-				  <SaveIcon/>
+				<SaveIcon/>
 			</Fab>
 
 			<Fab className={classes.loadButton} disabled>
-				  <CloudUploadIcon/>
+				<CloudUploadIcon/>
 			</Fab>
 
 			<Fab className={classes.shareButton} disabled>
-				  <ShareIcon/>
+				<ShareIcon/>
 			</Fab>
 
 			<PaletteDownloadDialog initialFormat={initialFormat} open={downloading} colors={colors} onClose={e => setDownloading(false)}/>
 
 		</div>
-	) ;
+		) ;
 } ;
 
 
