@@ -4,7 +4,7 @@
   "description": "A color palette compositor.",
   "scripts": {
     "test": "ava",
-    "build": "parcel build client/index.html --dist-dir gh-pages",
+    "build": "parcel build client/index.html --dist-dir gh-pages --public-url ./",
     "start": "parcel serve client/index.html"
   },
   "repository": "git+https://github.com/aureooms/palette.git",
