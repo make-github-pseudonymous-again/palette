@@ -278,7 +278,7 @@ export default function App () {
 			{filterKey &&
 				<Chip
 					className={classes.filterChip}
-					label={filterKey}
+					label={filterKey.slice(0,1).toUpperCase()+filterKey.slice(1)}
         			avatar={<Avatar><FilterIcon/></Avatar>}
 					onDelete={e => setFilterKey(undefined)}
 				/>
