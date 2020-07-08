@@ -1,0 +1,1 @@
+{"mappings":"AAEA,QACA,QACA,CAEA,GACA,SACA,CAEA,MACA,oBACA","sources":["./client/main.css"],"sourcesContent":["/* CSS declarations go here */\n\nbody, ol {\n  margin: 0 ;\n}\n\nol {\n  padding: 0 ;\n}\n\nol li {\n  list-style-type: none ;\n}\n"],"names":[],"version":3,"file":"index.da4b8e85.css.map"}
