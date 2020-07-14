@@ -2,13 +2,13 @@ import React, {useRef} from 'react';
 
 import Button from '@material-ui/core/Button' ;
 
-export default function InputFileButton ( {onChange, Button, ...rest} ) {
+function InputFileButton ( {onChange, Button, forwardedRef, ...rest} ) {
 
 	const inputEl = useRef(null);
 
 	return (
 		<React.Fragment>
-			<Button { ...rest} onClick={() => inputEl.current.click()}/>
+			<Button { ...rest} ref={forwardedRef} onClick={() => inputEl.current.click()}/>
 			<input
 				multiple
 				ref={inputEl}
@@ -23,3 +23,7 @@ export default function InputFileButton ( {onChange, Button, ...rest} ) {
 InputFileButton.defaultProps = {
 	Button,
 } ;
+
+export default React.forwardRef((props, ref) => {
+	return <InputFileButton {...props} forwardedRef={ref}/>;
+});

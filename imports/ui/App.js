@@ -386,9 +386,11 @@ export default function App () {
 			</Tooltip>
 
 			<Tooltip title="Load palette from file" placement="top">
+			<span>
 			<Fab className={classes.loadButton} disabled>
 				<CloudUploadIcon/>
 			</Fab>
+			</span>
 			</Tooltip>
 
 			<Tooltip title="Share palette" placement="top">
