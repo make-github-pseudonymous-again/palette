@@ -26,6 +26,8 @@ const useStyles = makeStyles(
 			fontFamily: 'monospace',
 			padding: theme.spacing(3),
 			cursor: 'pointer',
+			display: 'flex',
+			alignItems: 'center',
 		},
 		action : {
 		},
@@ -36,7 +38,7 @@ const ItemTypes = {
 	COLOR: 'knight'
 } ;
 
-export default function Color ({index, color, remove, update, move, transforms, filters}) {
+export default function Color ({index, color, remove, update, move, transforms, filters, style, layout}) {
 
 	const ref = useRef(null);
 
@@ -72,9 +74,11 @@ export default function Color ({index, color, remove, update, move, transforms, 
 	for (const fn of filters) displayedColor = fn(displayedColor);
 	const displayedColorString = displayedColor.hex();
 
-	const style = {
+	const containerStyle = {
+		...style,
 		background: displayedColorString ,
-		opacity: isDragging ? 0.8 : isOver ? 0.5 : 1,
+		opacity: isDragging ? 0.8 : isOver ? 0.5 : 1 ,
+		flexDirection: layout === 'vertical' ? 'column' : 'row' ,
 	} ;
 
 	const buttonStyle = {
@@ -87,7 +91,7 @@ export default function Color ({index, color, remove, update, move, transforms, 
 		<li
 			ref={ref}
 			className={classes.color}
-			style={style}
+			style={containerStyle}
 		>
 			<Chip label={index}/>
 			<ColorPicker
@@ -117,9 +121,12 @@ Color.propTypes = {
 	move: PropTypes.func.isRequired,
 	transforms: PropTypes.object.isRequired,
 	filters: PropTypes.array.isRequired,
+	style: PropTypes.object.isRequired,
+	layout: PropTypes.string.isRequired,
 } ;
 
 Color.defaultProps = {
 	transforms: {},
 	filters: [],
+	style: {},
 } ;

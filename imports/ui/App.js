@@ -34,6 +34,8 @@ import FilterBAndWIcon from '@material-ui/icons/FilterBAndW';
 import FilterIcon from '@material-ui/icons/Filter';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VerticalSplit from '@material-ui/icons/VerticalSplit';
+import HorizontalSplit from '@material-ui/icons/HorizontalSplit';
 
 import Seq from '../lib/Seq.js' ;
 
@@ -57,10 +59,21 @@ import colorblind from 'color-blind' ;
 
 const useStyles = makeStyles(
 	theme => ({
+		container: {
+			minHeight: '100vh',
+		},
+		palette: {
+			minHeight: '100vh',
+		},
 		filterChip: {
 			position: 'fixed',
 			top: theme.spacing(3),
 			right: theme.spacing(3),
+		},
+		layoutButton: {
+			position: 'fixed',
+			bottom: theme.spacing(3),
+			right: theme.spacing(111),
 		},
 		colorBlindnessButton: {
 			position: 'fixed',
@@ -138,6 +151,14 @@ for (const key of COLORBLIND_KEYS) {
 	FILTER_INDEX[key] = x => _color(colorblind[key](x.hex()));
 }
 
+const LAYOUTS = ['left-right', 'top-down'] ;
+
+const useToggle = ( first , second ) => {
+	const [toggled, setToggled] = useState(true);
+	const toggle = () => setToggled(!toggled);
+	return [toggled ? first : second, toggle] ;
+}
+
 export default function App () {
 
 	const history = useHistory();
@@ -155,6 +176,8 @@ export default function App () {
 	const colorBlindness = colorBlindnessIndex !== -1;
 	const nextColorblindnessIndex = colorBlindnessIndex + 1;
 	const nextColorblindnessKey = nextColorblindnessIndex < COLORBLIND_KEYS.length ? COLORBLIND_KEYS[nextColorblindnessIndex] : '';
+
+	const [layout, toggleLayout] = useToggle(...LAYOUTS);
 
 	useEffect(() => {
 		try {
@@ -263,9 +286,10 @@ export default function App () {
 	if (filterKey) filters.push(FILTER_INDEX[filterKey]);
 
 	return (
-		<div>
+		<div className={classes.container}>
 
 			<Palette
+				className={classes.palette}
 				colors={colors}
 				addColor={addColor}
 				removeColor={removeColor}
@@ -273,6 +297,7 @@ export default function App () {
 				moveColor={moveColor}
 				transforms={transforms}
 				filters={filters}
+				layout={layout}
 			/>
 
 			{filterKey &&
@@ -283,6 +308,15 @@ export default function App () {
 					onDelete={e => setFilterKey(undefined)}
 				/>
 			}
+
+			<Tooltip title="Switch Layout" placement="top">
+			<Fab
+				className={classes.layoutButton}
+				onClick={toggleLayout}
+			>
+				{ layout === 'top-down' ? <HorizontalSplit/> : <VerticalSplit/> }
+			</Fab>
+			</Tooltip>
 
 			<Tooltip title="Color blindness filters" placement="top">
 			<Fab
