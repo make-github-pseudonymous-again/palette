@@ -28,7 +28,7 @@
   "dependencies": {
     "@aureooms/js-fingertree": "5.0.0",
     "@aureooms/js-functools": "2.0.3",
-    "@aureooms/js-itertools": "4.0.0",
+    "@aureooms/js-itertools": "4.1.0",
     "@aureooms/js-measure": "1.0.3",
     "@aureooms/js-persistent": "2.2.0",
     "@aureooms/js-random": "2.0.0",
