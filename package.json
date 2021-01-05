@@ -26,7 +26,7 @@
     "@parcel/transformer-react-refresh-wrap": "2.0.0-alpha.3"
   },
   "dependencies": {
-    "@aureooms/js-fingertree": "5.0.0",
+    "@aureooms/js-fingertree": "5.0.2",
     "@aureooms/js-functools": "2.0.3",
     "@aureooms/js-itertools": "4.0.0",
     "@aureooms/js-measure": "1.0.3",
