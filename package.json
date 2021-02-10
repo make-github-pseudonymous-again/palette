@@ -22,7 +22,7 @@
   "devDependencies": {
     "parcel": "2.0.0-nightly.322",
     "@parcel/runtime-react-refresh": "2.0.0-alpha.3",
-    "@parcel/transformer-react-refresh-babel": "2.0.0-alpha.3",
+    "@parcel/transformer-react-refresh-babel": "2.0.0-nightly.581",
     "@parcel/transformer-react-refresh-wrap": "2.0.0-alpha.3"
   },
   "dependencies": {
